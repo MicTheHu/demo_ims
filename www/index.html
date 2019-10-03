@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <script type="application/shiny-singletons"></script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.12.4];shiny[1.1.0];htmlwidgets[1.2];bootstrap[3.3.7]</script>
+  <script src="shared/json2-min.js"></script>
+  <script src="shared/jquery.min.js"></script>
+  <link href="shared/shiny.css" rel="stylesheet"/>
+  <script src="shared/shiny.min.js"></script>
+  <script src="lib/htmlwidgets-1.2/htmlwidgets.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="css/custom.css"/>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+  <script src="shinyjs/inject.js"></script>
+  <script src="js/bootstrap.js" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" type="text/css" href="./css/bootstrap-toggle.css"/>
+  <script src="js/bootstrap-toggle.min.js"></script>
+
+  <title>Real Time analysis in Shiny - Symposium IMS 2019 </title>
+</head>
+<body>
+  <div class="container fill-height">
+  <nav  class="navbar navbar-default navbar-custom bg-red">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav shiny-tab-input pull-right" data-tabsetid="1" id="tabs">
+        <li class="active"><a href="#tab-1-1" data-toggle="tab" data-value="App">Results</a></li>
+        <li><a href="#tab-1-2" data-toggle="tab" data-value="Settings">Settings</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="tab-content" data-tabsetid="1">
+      <!-- HAUPTPANEL -->
+      <div class="tab-pane active" data-value="App" id="tab-1-1">
+        <div class="row text-center">
+          <div class="col-sm-12">
+            <h1>Real-time analysis of online surveys as an interactive web application with R, Shiny and LimeSurvey</h1>
+          </div>
+        </div>
+		
+        <div class="row">
+        </div>
+		
+		<div class="row top20px">
+		  <div class="col-sm-offset-1 col-sm-2">
+            <label id="sub_polls" class="shiny-html-output"> Figure: Polls </label>
+            <div class="checkbox-inline">
+              <input id="show_plot1" type="checkbox" checked data-toggle="toggle" data-size="normal" data-on="<span class='glyphicon glyphicon-ok'></span>" data-off="<span class='glyphicon glyphicon-remove'></span>" data-onstyle="success" data-offstyle="default" data-width="80">
+            </div>
+          </div>
+		  
+		  <div class="col-sm-2">
+            <label id="hist_dens" class="shiny-html-output"> Figure: Distribution </label>
+            <div class="checkbox-inline">
+              <input id="show_plot2" type="checkbox" data-toggle="toggle" data-size="normal" data-on="<span class='glyphicon glyphicon-ok'></span>" data-off="<span class='glyphicon glyphicon-remove'></span>" data-onstyle="success" data-offstyle="default" data-width="80">
+            </div>
+          </div>
+		  
+		  <div class="col-sm-2">
+            <label id="km" class="shiny-html-output"> Figure: KM-Estimator </label>
+            <div class="checkbox-inline">
+              <input id="show_plot3" type="checkbox" data-toggle="toggle" data-size="normal" data-on="<span class='glyphicon glyphicon-ok'></span>" data-off="<span class='glyphicon glyphicon-remove'></span>" data-onstyle="success" data-offstyle="default" data-width="80">
+            </div>
+          </div> 
+		  
+		  <div class="col-sm-2">
+            <label id="density" class="shiny-html-output"> Show: Density </label>
+            <div class="checkbox-inline">
+              <input id="density_enable" type="checkbox" data-toggle="toggle" data-size="normal" data-on="<span class='glyphicon glyphicon-ok'></span>" data-off="<span class='glyphicon glyphicon-remove'></span>" data-onstyle="success" data-offstyle="default" data-width="80">
+            </div>
+          </div> 
+		  
+		  <div class="col-sm-2">
+            <label id="grouping" class="shiny-html-output"> Show: Grouping </label>
+            <div class="checkbox-inline">
+              <input id="grouping_enable" type="checkbox" data-toggle="toggle" data-size="normal" data-on="<span class='glyphicon glyphicon-ok'></span>" data-off="<span class='glyphicon glyphicon-remove'></span>" data-onstyle="success" data-offstyle="default" data-width="80">
+            </div>
+          </div> 
+
+        </div>
+
+
+		<div id="plotwrapper_polls">
+			<div class="row">
+			  <div class="col-sm-offset-1 col-sm-10">
+				<h2 class="text-center">A time series of submitted polls</h2>
+				<div class="wrapper_3_to_2">
+				  <div class="main">
+					<div id="ts_plot" class="shiny-plot-output" style="width: 100%; height: 100%;"></div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		</div>
+		
+		<div id="plotwrapper_hist">
+			<div class="row top20px">
+			  <div class="col-sm-offset-1 col-sm-10">
+				<h2 class="text-center">Distribution of years of service at Institute of Medical Statistics (or MUW) </h2>
+				<div class="wrapper_3_to_2">
+				  <div class="main">
+					<div id="hist_plot" class="shiny-plot-output" style="width: 100%; height: 100%;"></div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		</div>
+		
+		<div id="plotwrapper_km">
+			<div class="row top20px">
+			  <div class="col-sm-offset-1 col-sm-10">
+				<h2 class="text-center">Survival Curves - based on Kaplan-Meier estimates</h2>
+				<div class="wrapper_3_to_2">
+				  <div class="main">
+					<div id="survival" class="shiny-plot-output" style="width: 100%; height: 150%;"></div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		</div>
+
+		
+		<div class="row top60px"></div>
+	    <div class="row top60px"></div>
+		<div class="row top60px"></div>
+		<div class="row top60px"></div>
+		<div class="row top60px"></div>
+		
+      </div>
+      <!-- EINSTELLUNGEN -->
+      <div class="tab-pane" data-value="Settings" id="tab-1-2">
+        <div class="row text-center">
+          <h2>Settings</h2>
+        </div>
+        <div class="col-sm-6">
+          <div class="row">
+            <h3 style="text-align:left;">Display</h3>
+          </div>
+            <div class="col-sm-9 top15px">
+              <p>Font size of graphics</p>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group top5px">
+                  <input type="number" class="form-control" id="plot_base_size" value="20" min="4" max="30">
+                </div>
+            </div>
+          </div>
+        <div class="col-sm-6">
+          <div class="row">
+            <h3 style="text-align:left;">General settings</h3>
+          </div>
+          <div class="col-sm-9 top15px">
+            <p>Time interval for automatic updates (in seconds)</p>
+            <p style="margin-top: 26px">Activate automatic updating</p>
+          </div>
+          <div class="col-sm-3 top5px">
+            <div class="form-group top5px">
+              <input type="number" class="form-control" id="autoupdate_interval" value="15" min="2">
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input id="autoupdate_enable" class="form-check-input" type="checkbox" checked value="">
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- end #container -->
+</body>
+</html>

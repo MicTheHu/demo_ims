@@ -1,3 +1,9 @@
+#####################################################
+# Symposium IMS - Shiny Demo
+# October 2019
+# Time Series Plot of submitted polls
+#####################################################
+
 output$ts_plot <- renderPlot({
   req(RV$ts_data)
   req(RV$plot_base_size)

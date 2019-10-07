@@ -1,3 +1,9 @@
+#####################################################
+# Symposium IMS - Shiny Demo
+# October 2019
+# Kaplan-Meier Estimator and plot
+#####################################################
+
 output$survival <- renderPlot({
   req(RV$data)
   req(RV$plot_base_size)

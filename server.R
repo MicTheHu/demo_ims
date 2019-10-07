@@ -1,24 +1,38 @@
+#####################################################
+# Symposium IMS - Shiny Demo
+# October 2019
+# shinyServer File
+#####################################################
+
+# Loading packages
+# Limer not available yet for newest R version, loading github version
 # library(limer)
 library(devtools)
-load_all("C:/Users/themessl-huberm/git_projects/MUW/functions/limer-master")
+load_all(paste0(getwd(), "/functions/limer-master"))
 library(ggplot2)
 library(scales)
 library(survival)
 library(survminer)
 
+# Source R functions
+source("functions/ts_data_preparation.R", local = TRUE)
+source("functions/data_preparation.R", local = TRUE)
+source("functions/limer_update.R", local = TRUE)
+
+# Source credentials: lime_user, lime_pw, api_url and survey_id (not on github)
 source("credentials.R", local = TRUE)
-source("functions/datenaufbereitung.R", local = TRUE)
-source("functions/ts_datenaufbereitung.R", local = TRUE)
 
 shinyServer(function(input, output, session) {
   
   # Enhance shiny with java script functionality
   shinyjs::useShinyjs(html = TRUE)
 
-  # Access Options for LimeSurvey
+  # Access Options for LimeSurvey (defined in credentials.R)
   options(lime_api = api_url)
   options(lime_username = lime_user)
   options(lime_password = lime_pw)
+  
+  # LimeSurvey Log in
   get_session_key()
 
   # Initialise Reactive Values
@@ -34,7 +48,6 @@ shinyServer(function(input, output, session) {
     get_responses(
       survey_id,
       sDocumentType = "csv",
-      # sLanguageCode = "de",
       sCompletionStatus = "all",
       sHeadingType = "code",
       sResponseType = "long"
@@ -49,8 +62,8 @@ shinyServer(function(input, output, session) {
   }
 
   # Data Preparation
-  RV$data <- datenaufbereitung(responses)
-  RV$ts_data <- ts_datenaufbereitung(responses)
+  RV$data <- data_preparation(responses)
+  RV$ts_data <- ts_data_preparation(responses)
 
   # OUTPUTS
   source("timeseries.R", local = TRUE)
@@ -58,7 +71,7 @@ shinyServer(function(input, output, session) {
   source("survival.R", local = TRUE)
 
   # INPUTS
-  source("input_fortschritt.R", local = TRUE)
+  source("input_progress.R", local = TRUE)
   source("input_options.R", local = TRUE)
   
 })

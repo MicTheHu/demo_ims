@@ -1,2 +1,11 @@
+#####################################################
+# Symposium IMS - Shiny Demo
+# October 2019
+# Starting the App
+#####################################################
+
+# Loading shiny
 library(shiny)
-runApp(appDir = "C:/Users/themessl-huberm/git_projects/MUW", launch.browser = TRUE)
+
+# Run app
+runApp(appDir = getwd(), launch.browser = TRUE)

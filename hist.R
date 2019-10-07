@@ -1,9 +1,8 @@
-observeEvent(input$grouping_enable, {
-  RV$grouping_enable <- input$grouping_enable
-})
-observeEvent(input$density_enable, {
-  RV$density_enable <- input$density_enable
-})
+#####################################################
+# Symposium IMS - Shiny Demo
+# October 2019
+# Figure Distribution
+#####################################################
 
 output$hist_plot <- renderPlot({
   req(RV$data)

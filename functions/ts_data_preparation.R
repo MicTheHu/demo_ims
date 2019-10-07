@@ -1,4 +1,10 @@
-ts_datenaufbereitung <- function(data, startdate = as.POSIXct("2019-10-02 11:00:00", format = "%Y-%m-%d %H:%M:%S")) {
+#####################################################
+# Symposium IMS - Shiny Demo
+# October 2019
+# Data preparation for time series plot
+#####################################################
+
+ts_data_preparation <- function(data, startdate = as.POSIXct("2019-10-02 11:00:00", format = "%Y-%m-%d %H:%M:%S")) {
   if (!is.null(data)) {
     data$complete <- ifelse(data$submitdate == "" | is.na(data$submitdate), "incomplete", "complete")
     data <- as.data.frame(table(data$datestamp, data$complete))

@@ -12,8 +12,9 @@ output$ts_plot <- renderPlot({
       geom_hline(yintercept = 0, colour = "#9E9E9E") +
       geom_step(aes(colour = complete), size = 2, direction = "hv") +
       scale_colour_manual(values = c("grey", "#03A9F4"), breaks = c("complete", "incomplete"), name = NULL) +
-      scale_y_continuous(limits = c(0, max(unique(floor(pretty(seq(0, (max(RV$ts_data$cumsum) + 1) * 1.1)))))), #max(RV$ts_data$cumsum)),
+      scale_y_continuous(limits = c(0, max(unique(floor(pretty(seq(0, (max(RV$ts_data$cumsum) + 1) * 1.1)))))),
                          breaks = function(x) unique(floor(pretty(seq(0, (max(x) + 1) * 1.1))))) +
+      scale_x_datetime(date_breaks = "1 day") +
       theme_minimal(base_size = RV$plot_base_size) +
       labs(
         y = "Number of submitted polls",

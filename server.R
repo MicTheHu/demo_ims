@@ -5,10 +5,10 @@
 #####################################################
 
 # Loading packages
-# Limer not available yet for newest R version, loading github version
-# library(limer)
 library(devtools)
-load_all(paste0(getwd(), "/functions/limer-master"))
+# Limer not available yet for newest R version, install github version
+# install_github("cloudyr/limer")
+library(limer)
 library(ggplot2)
 library(scales)
 library(survival)
